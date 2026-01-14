@@ -17,7 +17,7 @@ interface FoodLog {
   protein: number | null
   carbs: number | null
   fat: number | null
-  items: unknown
+  items: Record<string, unknown> | null
   notes: string | null
   date: string
   createdAt: string
