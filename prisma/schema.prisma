@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SubscriptionTier {
+  FREE
+  PRO_MONTHLY
+  PRO_ANNUAL
+  LIFETIME
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+}
+
+enum Sex {
+  MALE
+  FEMALE
+}
+
+enum ActivityLevel {
+  SEDENTARY
+  LIGHT
+  MODERATE
+  ACTIVE
+  VERY_ACTIVE
+}
+
+enum FoodSource {
+  MANUAL
+  AI
+  BARCODE
+  VOICE
+}
+
+enum Confidence {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+
+  // Profile (mirroring iOS UserProfile)
+  heightCm        Int?
+  weightKg        Int?
+  age             Int?
+  sex             Sex?
+  activityLevel   ActivityLevel?
+  tdee            Int?
+  budgetCap       Int?
+  deficitPercent  Int     @default(20)
+  pessimismLevel  String  @default("normal")
+
+  // Additional profile fields from iOS
+  weeklyGoal      String?  // "lose_0.5", "lose_0.25", "maintain"
+  chargeRate      Float?   // 0.25, 0.5, 0.75
+  bmrValue        Int?
+  baseLimit       Int?
+  manualBaseLimit Int?
+  currentStreak   Int      @default(0)
+  longestStreak   Int      @default(0)
+  lastLogDate     String?
+  defaultFoodPessimism Boolean @default(false)
+
+  // Subscription
+  subscriptionTier   SubscriptionTier   @default(FREE)
+  subscriptionStatus SubscriptionStatus @default(ACTIVE)
+  subscriptionExpiry DateTime?
+  subscriptionStartDate DateTime?
+
+  // RevenueCat integration
+  revenueCatAppUserId String? @unique
+
+  // Apple Sign In
+  appleUserId String? @unique
+  displayName String?
+
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
+
+  // Relations
+  foodLogs      FoodLog[]
+  usageRecords  UsageRecord[]
+  refreshTokens RefreshToken[]
+
+  @@index([email])
+  @@index([revenueCatAppUserId])
+  @@index([appleUserId])
+}
+
+model FoodLog {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  calories     Int
+  baseCalories Int?        // Original calories before pessimism
+  description  String
+  imageUrl     String?
+  isGreasy     Boolean     @default(false)
+  source       FoodSource
+  confidence   Confidence?
+
+  // Macronutrients (in grams)
+  protein Int?
+  carbs   Int?
+  fat     Int?
+
+  // Detailed items from AI analysis
+  items Json?
+  notes String?
+
+  // Date tracking (matches iOS format "YYYY-MM-DD")
+  date      String
+  createdAt DateTime @default(now())
+
+  @@index([userId, date])
+  @@index([userId, createdAt])
+}
+
+model UsageRecord {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  date       String
+  scanCount  Int       @default(0)
+  lastScanAt DateTime?
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  lastLoginAt  DateTime?
+
+  @@index([email])
+}
+

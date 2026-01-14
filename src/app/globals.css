@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #ff382e;
+  --background: #000000;
+  --off-black: #111111;
+  --stone-dark: #1c1c1c;
+  --stone-dark-half: #0a0a0a;
+  --gray-400: #666666;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #383b40;
+  --gray-800: #262a2e;
+  --success: #34C759;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background: var(--background);
+  color: white;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Primary button - matches app's white button style */
+.btn-primary {
+  background: white;
+  color: black;
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 18px 32px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Secondary button - matches app's stone dark style */
+.btn-secondary {
+  background: var(--stone-dark);
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 24px;
+  border: 1px solid #333;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Input styles - matches app's input style */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  background: var(--off-black);
+  border: 1px solid #333;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 18px 16px;
+  width: 100%;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="text"]::placeholder {
+  color: var(--gray-500);
+  text-transform: uppercase;
+}
+
+/* Void bar stripes background */
+.void-stripes {
+  background: repeating-linear-gradient(
+    -45deg,
+    #262a2e,
+    #262a2e 4px,
+    #383b40 4px,
+    #383b40 8px
+  );
+}
+
+/* Hatch pattern for full-width void bar */
+.hatch-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #1a1a1a,
+    #1a1a1a 10px,
+    #000000 10px,
+    #000000 20px
+  );
+}
+
+/* Section divider line */
+.divider {
+  height: 1px;
+  background: #222;
+}
+
+/* Label style from app */
+.label {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+/* Tag style from app */
+.tag {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+/* Number display styles */
+.number-large {
+  font-size: clamp(64px, 15vw, 120px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.number-medium {
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* Headline styles */
+.h1 {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+/* Card/box style from app */
+.card {
+  background: var(--off-black);
+  border: 1px solid #222;
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 40px rgba(255, 56, 46, 0.3);
+}
+
+.glow-white {
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+/* Selection */
+::selection {
+  background: var(--primary);
+  color: white;
+}
