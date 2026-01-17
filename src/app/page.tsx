@@ -180,25 +180,25 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="border border-white/10 p-6">
               <p className="text-[#ff382e] text-[10px] font-black tracking-[0.2em] mb-3">01_CHARGE</p>
-              <p className="text-white font-black text-lg tracking-tight mb-2">YOUR WATCH EARNS FOOD</p>
+              <p className="text-white font-black text-lg tracking-tight mb-2">NO GUESSING YOUR ACTIVITY</p>
               <p className="text-sm text-white/40 leading-relaxed">
-                Active calories from your Apple Watch charge the bar back up. Real movement, not a dropdown menu guess.
+                We don't let you claim you're "moderately active" from a dropdown. Your Apple Watch tracks real movement. We treat everyone as sedentary and credit half your active calories back—because other apps let you "earn" a pizza after a walk. That's why they don't work.
               </p>
             </div>
 
             <div className="border border-white/10 p-6">
-              <p className="text-[#ff382e] text-[10px] font-black tracking-[0.2em] mb-3">02_SCAN</p>
-              <p className="text-white font-black text-lg tracking-tight mb-2">AI FOOD ANALYSIS</p>
+              <p className="text-[#ff382e] text-[10px] font-black tracking-[0.2em] mb-3">02_ADAPT</p>
+              <p className="text-white font-black text-lg tracking-tight mb-2">LEARNS HOW YOUR BODY ACTUALLY WORKS</p>
               <p className="text-sm text-white/40 leading-relaxed">
-                Point. Snap. Logged. Take a photo of your meal and get an instant calorie estimate.
+                We track what you eat vs. how your weight actually moves. Over time, your budget adapts to your real metabolism—not a calculator's guess.
               </p>
             </div>
 
             <div className="border border-white/10 p-6">
-              <p className="text-[#ff382e] text-[10px] font-black tracking-[0.2em] mb-3">03_ADAPT</p>
-              <p className="text-white font-black text-lg tracking-tight mb-2">LEARNS YOUR METABOLISM</p>
+              <p className="text-[#ff382e] text-[10px] font-black tracking-[0.2em] mb-3">03_SCAN</p>
+              <p className="text-white font-black text-lg tracking-tight mb-2">AI THAT DOESN'T LIE TO YOU</p>
               <p className="text-sm text-white/40 leading-relaxed">
-                We track expected vs actual weight change. Your budget adapts to how your body actually works.
+                Point. Snap. Logged. Our food analysis is tuned to not underestimate. Other apps lowball portions so you feel good. We'd rather you hit your goal.
               </p>
             </div>
           </div>
