@@ -80,17 +80,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-black flex flex-col">
-      {/* Header */}
-      <header className="border-b border-white/10 px-6 py-5 flex items-center justify-between">
-        <h1 className="text-lg font-black tracking-tighter">DEFICIT</h1>
-        <nav className="flex gap-6 text-[10px] font-bold tracking-[0.2em] text-white/40">
-          <Link href="/privacy" className="hover:text-white transition-colors">PRIVACY</Link>
-          <Link href="/terms" className="hover:text-white transition-colors">TERMS</Link>
-        </nav>
-      </header>
-
       {/* Hero - Title + Phone Mockup + Waitlist */}
-      <section className="pt-8 md:pt-16 pb-12 px-6">
+      <section className="pt-12 md:pt-20 pb-12 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
           {/* Left: Text Content + Waitlist Form */}
           <div className="text-center md:text-left order-2 md:order-1">
@@ -147,7 +138,7 @@ export default function Home() {
           </div>
 
           {/* Right: Phone Mockup */}
-          <div className="flex justify-center order-1 md:order-2">
+          <div className="flex justify-center md:justify-start order-1 md:order-2">
             <Image
               src="/phone-mockup.png"
               alt="DEFICIT App Screenshot"
