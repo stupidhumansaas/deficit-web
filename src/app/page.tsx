@@ -138,7 +138,7 @@ export default function Home() {
           </div>
 
           {/* Right: Phone Mockup */}
-          <div className="flex justify-center md:justify-end order-1 md:order-2 md:-mt-4">
+          <div className="flex justify-center md:justify-end order-1 md:order-2 md:-mt-4 mb-[-2rem] md:mb-0 pl-4 md:pl-0">
             <Image
               src="/phone-mockup.png"
               alt="DEFICIT App Screenshot"
