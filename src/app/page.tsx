@@ -138,14 +138,14 @@ export default function Home() {
           </div>
 
           {/* Right: Phone Mockup */}
-          <div className="flex justify-center md:justify-start order-1 md:order-2">
+          <div className="flex justify-center md:justify-end order-1 md:order-2">
             <Image
               src="/phone-mockup.png"
               alt="DEFICIT App Screenshot"
-              width={400}
-              height={565}
+              width={500}
+              height={706}
               priority
-              className="w-auto h-auto max-w-[280px] md:max-w-[350px] lg:max-w-[400px]"
+              className="w-auto h-auto max-w-[280px] md:max-w-[400px] lg:max-w-[480px]"
             />
           </div>
         </div>
