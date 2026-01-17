@@ -81,7 +81,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black flex flex-col">
       {/* Hero - Title + Phone Mockup + Waitlist */}
-      <section className="pt-12 md:pt-20 pb-12 px-6">
+      <section className="pt-8 md:pt-20 pb-12 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
           {/* Left: Text Content + Waitlist Form */}
           <div className="text-center md:text-left order-2 md:order-1">
@@ -138,14 +138,14 @@ export default function Home() {
           </div>
 
           {/* Right: Phone Mockup */}
-          <div className="flex justify-center md:justify-end order-1 md:order-2 md:-mt-4 mb-[-2rem] md:mb-0 pl-4 md:pl-0">
+          <div className="flex justify-center md:justify-end order-1 md:order-2 md:-mt-4 mb-[-3rem] md:mb-0 pl-4 md:pl-0">
             <Image
               src="/phone-mockup.png"
               alt="DEFICIT App Screenshot"
               width={500}
               height={706}
               priority
-              className="w-auto h-auto max-w-[280px] md:max-w-[400px] lg:max-w-[480px]"
+              className="w-auto h-auto max-w-[340px] md:max-w-[400px] lg:max-w-[480px]"
             />
           </div>
         </div>
