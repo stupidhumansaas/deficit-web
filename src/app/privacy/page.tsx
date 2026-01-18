@@ -104,7 +104,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4">// CONTACT</h2>
             <p>
-              Questions? Email us at <a href="mailto:privacy@deficit.app" className="text-primary hover:underline">privacy@deficit.app</a>
+              Questions? Email us at <a href="mailto:willmorrisonwebdev@gmail.com" className="text-primary hover:underline">willmorrisonwebdev@gmail.com</a>
             </p>
           </section>
         </div>
