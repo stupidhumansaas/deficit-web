@@ -92,9 +92,12 @@ model User {
   lastLoginAt DateTime?
 
   // Relations
-  foodLogs      FoodLog[]
-  usageRecords  UsageRecord[]
-  refreshTokens RefreshToken[]
+  foodLogs                FoodLog[]
+  usageRecords            UsageRecord[]
+  refreshTokens           RefreshToken[]
+  pushTokens              PushToken[]
+  notificationPreferences UserNotificationPreference?
+  notificationLogs        NotificationLog[]
 
   @@index([email])
   @@index([revenueCatAppUserId])
@@ -164,5 +167,138 @@ model AdminUser {
   lastLoginAt  DateTime?
 
   @@index([email])
+}
+
+// ============================================
+// Push Notification Models
+// ============================================
+
+enum NotificationType {
+  MEAL_REMINDER
+  DAILY_SUMMARY
+  STREAK_MILESTONE
+  STREAK_AT_RISK
+  ADMIN_BROADCAST    // Admin-sent bulk notifications
+}
+
+enum DevicePlatform {
+  IOS
+  ANDROID
+}
+
+enum BroadcastStatus {
+  DRAFT
+  QUEUED
+  PROCESSING
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+model PushToken {
+  id         String         @id @default(cuid())
+  userId     String
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token      String         @unique
+  platform   DevicePlatform
+  deviceId   String?
+  isActive   Boolean        @default(true)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  lastUsedAt DateTime?
+
+  @@index([userId])
+  @@index([token])
+  @@index([isActive, platform])
+}
+
+model UserNotificationPreference {
+  id                     String   @id @default(cuid())
+  userId                 String   @unique
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Master toggle
+  notificationsEnabled   Boolean  @default(true)
+
+  // Meal Reminders
+  mealRemindersEnabled   Boolean  @default(false)
+  breakfastTime          String?  // "HH:mm" format
+  lunchTime              String?
+  dinnerTime             String?
+  breakfastEnabled       Boolean  @default(true)
+  lunchEnabled           Boolean  @default(true)
+  dinnerEnabled          Boolean  @default(true)
+
+  // Daily Summary
+  dailySummaryEnabled    Boolean  @default(false)
+  dailySummaryTime       String?  // "21:00" default
+
+  // Streak Alerts
+  streakAlertsEnabled    Boolean  @default(true)
+  streakMilestoneEnabled Boolean  @default(true)
+  streakAtRiskEnabled    Boolean  @default(true)
+  streakAtRiskTime       String?  // "20:00" default
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model NotificationLog {
+  id            String           @id @default(cuid())
+  userId        String
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type          NotificationType
+  title         String
+  body          String
+  data          Json?
+  sentAt        DateTime?
+  deliveredAt   DateTime?
+  failedAt      DateTime?
+  failureReason String?
+  apnsId        String?
+  broadcastId   String?          // Link to BroadcastCampaign if from admin
+  broadcast     BroadcastCampaign? @relation(fields: [broadcastId], references: [id])
+  createdAt     DateTime         @default(now())
+
+  @@index([userId, createdAt])
+  @@index([type, sentAt])
+  @@index([broadcastId])
+}
+
+// Admin broadcast campaign for bulk notifications
+model BroadcastCampaign {
+  id              String          @id @default(cuid())
+  title           String          // Internal title for admin reference
+  notificationTitle String        // Title shown in the notification
+  notificationBody  String        // Body text of the notification
+  data            Json?           // Optional custom data payload
+
+  // Targeting
+  targetTiers     String[]        // ["FREE", "PRO_MONTHLY", etc.] - empty means all
+  targetPlatforms String[]        // ["IOS", "ANDROID"] - empty means all
+
+  // Status tracking
+  status          BroadcastStatus @default(DRAFT)
+  scheduledFor    DateTime?       // For scheduled sends
+  startedAt       DateTime?
+  completedAt     DateTime?
+
+  // Progress tracking
+  totalRecipients Int             @default(0)
+  sentCount       Int             @default(0)
+  failedCount     Int             @default(0)
+
+  // Metadata
+  createdBy       String?         // Admin email who created it
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  // Relations
+  logs            NotificationLog[]
+
+  @@index([status])
+  @@index([createdAt])
 }
 

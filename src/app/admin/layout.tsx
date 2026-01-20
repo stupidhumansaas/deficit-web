@@ -8,6 +8,7 @@ const navItems = [
   { href: '/admin', label: 'Dashboard' },
   { href: '/admin/users', label: 'Users' },
   { href: '/admin/food-logs', label: 'Food Logs' },
+  { href: '/admin/notifications', label: 'Notifications' },
   { href: '/admin/usage-records', label: 'Usage Records' },
   { href: '/admin/refresh-tokens', label: 'Refresh Tokens' },
   { href: '/admin/waitlist', label: 'Waitlist' },
