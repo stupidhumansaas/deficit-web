@@ -89,7 +89,12 @@ export default function UserDetailPage({ params }: { params: Promise<{ id: strin
       if (!res.ok) throw new Error('User not found')
       const data = await res.json()
       setUser(data)
-      setFormData(data)
+      // Ensure subscription fields have explicit values to prevent fallback issues
+      setFormData({
+        ...data,
+        subscriptionTier: data.subscriptionTier || 'FREE',
+        subscriptionStatus: data.subscriptionStatus || 'ACTIVE',
+      })
     } catch (error) {
       console.error('Failed to fetch user:', error)
     } finally {
@@ -100,14 +105,25 @@ export default function UserDetailPage({ params }: { params: Promise<{ id: strin
   const handleSave = async () => {
     setSaving(true)
     try {
+      // Ensure subscription fields are always explicitly included
+      const dataToSave = {
+        ...formData,
+        subscriptionTier: formData.subscriptionTier || 'FREE',
+        subscriptionStatus: formData.subscriptionStatus || 'ACTIVE',
+      }
       const res = await fetch(`/api/admin/users/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSave),
       })
       if (!res.ok) throw new Error('Failed to save')
       const data = await res.json()
       setUser({ ...user!, ...data })
+      setFormData({
+        ...data,
+        subscriptionTier: data.subscriptionTier || 'FREE',
+        subscriptionStatus: data.subscriptionStatus || 'ACTIVE',
+      })
       setEditMode(false)
     } catch (error) {
       console.error('Failed to save user:', error)
@@ -173,7 +189,12 @@ export default function UserDetailPage({ params }: { params: Promise<{ id: strin
               <button
                 onClick={() => {
                   setEditMode(false)
-                  setFormData(user)
+                  // Ensure subscription fields have explicit values when canceling
+                  setFormData({
+                    ...user,
+                    subscriptionTier: user.subscriptionTier || 'FREE',
+                    subscriptionStatus: user.subscriptionStatus || 'ACTIVE',
+                  })
                 }}
                 className="px-4 py-2 bg-gray-700 text-white rounded-lg"
               >
@@ -281,7 +302,7 @@ export default function UserDetailPage({ params }: { params: Promise<{ id: strin
           <div className="space-y-3">
             <SelectField
               label="Tier"
-              value={formData.subscriptionTier || 'FREE'}
+              value={formData.subscriptionTier ?? 'FREE'}
               editMode={editMode}
               options={[
                 { value: 'FREE', label: 'Free' },
@@ -293,7 +314,7 @@ export default function UserDetailPage({ params }: { params: Promise<{ id: strin
             />
             <SelectField
               label="Status"
-              value={formData.subscriptionStatus || 'ACTIVE'}
+              value={formData.subscriptionStatus ?? 'ACTIVE'}
               editMode={editMode}
               options={[
                 { value: 'ACTIVE', label: 'Active' },
